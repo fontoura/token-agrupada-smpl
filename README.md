@@ -86,7 +86,7 @@ SEPARAR_TOKEN2(tkn, a1, a2);
 A biblioteca também suporta o caso de três atributos. Para mandar três atributos para um evento, faz-se assim:
 
 ```C
-schedule(ev, time, AGRUPAR_TOKEN2(a1, a2, a3));
+schedule(ev, time, AGRUPAR_TOKEN3(a1, a2, a3));
 ```
 
 Para tratar o evento, faz-se o seguinte:
@@ -96,7 +96,7 @@ int ev, tkn;
 cause(&ev, &tkn);
 // ...
 int a1, a2, a3;
-SEPARAR_TOKEN2(tkn, a1, a2, a3);
+SEPARAR_TOKEN3(tkn, a1, a2, a3);
 // agora pode usar o a1, a2 e a3.
 ```
 
