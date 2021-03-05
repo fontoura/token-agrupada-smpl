@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+#ifndef _TOKEN_AGRUPADA_SMPL_DEFINED
+#define _TOKEN_AGRUPADA_SMPL_DEFINED
+
 #define AGRUPAR_TOKEN2(x, y)        _create_token2(x, y)
 #define SEPARAR_TOKEN2(tkn, x, y)   _extract_token2(&(tkn), &(x), &(y))
 #define AGRUPAR_TOKEN3(x, y, z)     _create_token3(x, y, z)
@@ -31,3 +34,5 @@ int _create_token2(int x, int y);
 void _extract_token2(int* tkn, int* x, int* y);
 int _create_token3(int x, int y, int z);
 void _extract_token3(int* tkn, int* x, int* y, int* z);
+
+#endif
