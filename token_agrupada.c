@@ -146,3 +146,77 @@ void _extract_token3(int* tkn, int* x, int* y, int* z)
 
     *tkn = 0;
 }
+
+int _create_token4(int x, int y, int z, int k)
+{
+    int* ptr = (int*) malloc(sizeof(int) * 4);
+
+    ptr[0] = x;
+    ptr[1] = y;
+    ptr[2] = z;
+    ptr[3] = k;
+
+    return add_composite_token(ptr);
+}
+
+void _extract_token4(int* tkn, int* x, int* y, int* z, int* k)
+{
+    if (*tkn == 0)
+    {
+        fprintf(stderr, "\r\n## ERRO - uma token somente pode ser separada uma vez! ###\r\n");
+    }
+    
+    int* ptr = remove_composite_token(*tkn);
+
+    if (ptr == NULL)
+    {
+        fprintf(stderr, "\r\n## ERRO - esta token nao corresponde a um valor agrupado! ###\r\n");
+    }
+
+    *x = ptr[0];
+    *y = ptr[1];
+    *z = ptr[2];
+    *k = ptr[3];
+
+    free((void*) ptr);
+
+    *tkn = 0;
+}
+
+int _create_token5(int x, int y, int z, int k, int w)
+{
+    int* ptr = (int*) malloc(sizeof(int) * 4);
+
+    ptr[0] = x;
+    ptr[1] = y;
+    ptr[2] = z;
+    ptr[3] = k;
+    ptr[4] = w;
+
+    return add_composite_token(ptr);
+}
+
+void _extract_token5(int* tkn, int* x, int* y, int* z, int* k, int* w)
+{
+    if (*tkn == 0)
+    {
+        fprintf(stderr, "\r\n## ERRO - uma token somente pode ser separada uma vez! ###\r\n");
+    }
+    
+    int* ptr = remove_composite_token(*tkn);
+
+    if (ptr == NULL)
+    {
+        fprintf(stderr, "\r\n## ERRO - esta token nao corresponde a um valor agrupado! ###\r\n");
+    }
+
+    *x = ptr[0];
+    *y = ptr[1];
+    *z = ptr[2];
+    *k = ptr[3];
+    *w = ptr[4];
+
+    free((void*) ptr);
+
+    *tkn = 0;
+}

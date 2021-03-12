@@ -58,9 +58,11 @@ switch (ev) {
     // ...
 ```
 
-Este paradigma funciona se o executável for compilado em 32 bit (o `int` e o `void*` tem o mesmo tamanho). Portanto, isto funcionava perfeitamente quando o `smpl` foi criado. Porém, atualmente a maioria dos computadores usam arquitetura de 64 bits. Em 64 bits, o código acima não funciona (pois quando é feito cast de `void*` para `int` no `schedule` é possível que informação seja perdida, e o cast inverso feito no `cause` não vai funcionar como esperado).
+Este paradigma funciona se o executável for compilado em 32 bits. Quando o executável é de 32 bits, os ponteiros são de 32 bits, e as variáveis `int` também são - em outros termos, o `int` e o `void*` têm o mesmo tamanho. Portanto, isto funcionava perfeitamente quando o `smpl` foi criado.
 
-Considero ainda que o paradigma, apesar de funcionar, prejudica severamente a legibilidade do código. O código ganha uma complexidade desnecessária para permitir o envio de atributos compostos para o `smpl`.
+Porém, atualmente a maioria dos computadores usam arquitetura de 64 bits. Em 64 bits, os ponteiros têm 64 bits, mas as variáveis `int` continuam com 32 bits - em outros termos, um ponteiro não cabe em um `int`. Portanto, o código acima não funciona mais, pois quando é feito cast de `void*` para `int` no `schedule` é possível que informação seja perdida, de forma que o cast inverso feito no `cause` não vai funcionar como esperado (ao converter um ponteiro para `int` e depois para ponteiro de novo, o valor pode ser diferente do original).
+
+O paradigma acima, apesar de funcionar em 32 bits, deixa o código complexo, prejudicando severamente sua legibilidade. O código ganha uma complexidade desnecessária para permitir o envio de atributos compostos para o `smpl`. Com o intuito de evitar que isto ocorra, fiz esta biblioteca.
 
 ## Uso
 
@@ -83,13 +85,15 @@ SEPARAR_TOKEN2(tkn, a1, a2);
 // agora pode usar o a1 e o a2.
 ```
 
-A biblioteca também suporta o caso de três atributos. Para mandar três atributos para um evento, faz-se assim:
+A biblioteca também suporta os casos de três, quatro e cinco atributos.
+
+Para mandar três atributos para um evento, faz-se assim:
 
 ```C
 schedule(ev, time, AGRUPAR_TOKEN3(a1, a2, a3));
 ```
 
-Para tratar o evento, faz-se o seguinte:
+Para tratar um evento com três atributos, faz-se o seguinte:
 
 ```C
 int ev, tkn;
@@ -98,6 +102,40 @@ cause(&ev, &tkn);
 int a1, a2, a3;
 SEPARAR_TOKEN3(tkn, a1, a2, a3);
 // agora pode usar o a1, a2 e a3.
+```
+
+Para mandar quatro atributos para um evento, faz-se assim:
+
+```C
+schedule(ev, time, AGRUPAR_TOKEN4(a1, a2, a3, a4));
+```
+
+Para tratar um evento com quatro atributos, faz-se o seguinte:
+
+```C
+int ev, tkn;
+cause(&ev, &tkn);
+// ...
+int a1, a2, a3, a4;
+SEPARAR_TOKEN4(tkn, a1, a2, a3, a4);
+// agora pode usar o a1, a2, a3 e a4.
+```
+
+Para mandar cinco atributos para um evento, faz-se assim:
+
+```C
+schedule(ev, time, AGRUPAR_TOKEN5(a1, a2, a3, a4, a5));
+```
+
+Para tratar um evento com cinco atributos, faz-se o seguinte:
+
+```C
+int ev, tkn;
+cause(&ev, &tkn);
+// ...
+int a1, a2, a3, a4, a5;
+SEPARAR_TOKEN5(tkn, a1, a2, a3, a4, a5);
+// agora pode usar o a1, a2, a3, a4 e a5.
 ```
 
 ## Licença
